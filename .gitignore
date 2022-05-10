@@ -128,3 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /data/training_set_VU_DM.csv
+/.idea/.gitignore
+/.idea/DMT_Asg_2.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

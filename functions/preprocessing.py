@@ -16,4 +16,21 @@ def removeUselessColumns(dataFrame, threshold=90):
     for index, value in percentages_of_nulls.items():
         if value > threshold:
             useless_columns.append(index)
-    return dataFrame.drop(useless_columns, 1)
+    dataFrame = dataFrame.drop(useless_columns, 1)
+    dataFrame = dataFrame.drop(['comp3_rate','comp3_inv'], 1)
+    return dataFrame, useless_columns
+
+def mergeComps(dataFrame):
+    ## when using a threshold of 90%, we remove data from comp : 1, 3, 4, 6, 7
+    dataFrame['comp_rate'] = dataFrame[['comp2_rate', 'comp5_rate', ## we take the minimum,  
+                                        'comp8_rate']].min(axis=1)  ##because taking mean could make us lose data about competitors cheaper price
+    dataFrame['comp_inv'] = dataFrame[['comp2_inv', 'comp5_inv', 
+                                       'comp8_inv']].mean(axis=1) ## we take the mean because it tells us how many competitors have the same room
+    dataFrame['comp_rate_percent_diff'] = dataFrame[['comp2_rate_percent_diff', 'comp5_rate_percent_diff', 
+                                       'comp8_rate_percent_diff']].max(axis=1) ## we take max to find the competitor with the best deal
+    
+    dataFrame = dataFrame.drop(['comp2_rate', 'comp5_rate', 'comp8_rate','comp2_inv', 'comp5_inv', 'comp8_inv',
+                                'comp2_rate_percent_diff', 'comp5_rate_percent_diff', 'comp8_rate_percent_diff'], 1)
+    return dataFrame
+    
+    

@@ -69,6 +69,6 @@ def fill_comp_inv(dataFrame:pd.DataFrame) -> pd.DataFrame:
 
 def fill_rate_diff(dataFrame:pd.DataFrame) -> pd.DataFrame:
     out_df = dataFrame.copy()
-    #out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(out_df['comp_rate_percent_diff'].mean())
-    out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(0)
+    out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(out_df['comp_rate_percent_diff'].mean())
+    #out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(0)
     return out_df

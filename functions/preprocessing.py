@@ -47,28 +47,26 @@ def mergeCompsAll(dataFrame:pd.DataFrame) -> pd.DataFrame:
     rate_cols = [f'comp{i}_rate' for i in range(1,9)]
     inv_cols = [f'comp{i}_inv' for i in range(1,9)]
     rate_per_cols = [f'comp{i}_rate_percent_diff' for i in range(1,9)]
-
     rate_slice = out_df[rate_cols]
     inv_slice = out_df[inv_cols]
     rate_per_slice = out_df[rate_per_cols]
-    out_df['comp_rate'] = rate_slice.mode(axis=1,numeric_only=True,dropna=True).iloc[:,0]
-    out_df['comp_inv'] = inv_slice.mode(axis=1,numeric_only=True,dropna=True).iloc[:,0]
+    out_df['comp_rate'] = rate_slice.mode(axis=1,numeric_only=True,dropna=True).max(axis=1)
+    out_df['comp_inv'] = inv_slice.mode(axis=1,numeric_only=True,dropna=True).max(axis=1)
     out_df['comp_rate_percent_diff'] = rate_per_slice.mean(axis=1, numeric_only=True, skipna=True)
     return out_df
 
 
 def fill_comp_rate(dataFrame:pd.DataFrame) -> pd.DataFrame:
     out_df = dataFrame.copy()
-    out_df['comp_rate'] = out_df['comp_rate'].fillna(out_df['comp_rate'].mode().values[0])
+    out_df['comp_rate'] = out_df['comp_rate'].fillna(0)
     return out_df
 
 def fill_comp_inv(dataFrame:pd.DataFrame) -> pd.DataFrame:
     out_df = dataFrame.copy()
-    out_df['comp_inv'] = out_df['comp_inv'].fillna(out_df['comp_inv'].mode().values[0])
+    out_df['comp_inv'] = out_df['comp_inv'].fillna(0)
     return out_df
 
 def fill_rate_diff(dataFrame:pd.DataFrame) -> pd.DataFrame:
     out_df = dataFrame.copy()
-    out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(out_df['comp_rate_percent_diff'].mean())
-    #out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(0)
+    out_df['comp_rate_percent_diff'] = out_df['comp_rate_percent_diff'].fillna(0)
     return out_df

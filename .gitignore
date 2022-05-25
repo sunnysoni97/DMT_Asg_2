@@ -138,5 +138,7 @@ dmypy.json
 
 /data/training_set_VU_DM.csv
 /data/train_data.csv
+/data/test_data.csv
+/data/test_set_VU_DM.csv
 
 /dask-worker-space/
